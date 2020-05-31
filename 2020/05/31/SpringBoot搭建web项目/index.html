@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.0.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.0.0" type="image/png" sizes="32x32"><meta name="description" content="这篇文章主要介绍一下使用SpringBoot从零搭建web项目，demo主要演示登录的功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot搭建web项目">
+<meta property="og:url" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Jiayan&#39;s Blog">
+<meta property="og:description" content="这篇文章主要介绍一下使用SpringBoot从零搭建web项目，demo主要演示登录的功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/init.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/zip.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/open.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/run.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/method1login.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/login.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/dic.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/ajaxcode.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/filecons.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/talend1.png">
+<meta property="og:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/talend2.png">
+<meta property="article:published_time" content="2020-05-31T12:16:50.000Z">
+<meta property="article:modified_time" content="2020-05-31T13:13:30.942Z">
+<meta property="article:author" content="Jiayan Huang">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/init.png"><meta name="keywords" content="Jiayan Huang, Jiayan's Blog"><meta name="description" content="欢迎来到家晏的博客"><title>SpringBoot搭建web项目 | Jiayan's Blog</title><link ref="canonical" href="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.0.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/about/"><span class="header-nav-menu-item__icon"><i class="fas fa-user"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Jiayan's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">SpringBoot搭建web项目</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2020-05-31</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2020-05-31</span></span></div></header><div class="post-body"><p>这篇文章主要介绍一下使用SpringBoot从零搭建web项目，demo主要演示登录的功能</p>
+<a id="more"></a>
+
+
+        <h3 id="在-https-start-spring-io-上生成初始化文件">
+          <a href="#在-https-start-spring-io-上生成初始化文件" class="heading-link"><i class="fas fa-link"></i></a>在 https://start.spring.io/ 上生成初始化文件</h3>
+      <img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/init.png" alt="50" style="zoom:20%;">
+
+<p>会生成.zip文件，将文件解压</p>
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/zip.png" alt="50" style="zoom:50%;">
+
+
+        <h3 id="在IDEA中打开这个项目">
+          <a href="#在IDEA中打开这个项目" class="heading-link"><i class="fas fa-link"></i></a>在IDEA中打开这个项目</h3>
+      <img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/open.png" alt="50" style="zoom:30%;">
+
+<p>​    这里有一个<strong>问题</strong>就是：Idea打开项目后 maven下载依赖会卡在 <strong>Resolving Maven dependencies</strong></p>
+<p>​    <strong>解决：</strong>①把镜像地址换成阿里的，具体操作见：</p>
+<p>​                ② 修改参数设置：<span class="exturl"><a class="exturl__link" href="https://cloud.tencent.com/developer/article/1461546" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1461546</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h3 id="运行">
+          <a href="#运行" class="heading-link"><i class="fas fa-link"></i></a>运行</h3>
+      <p>直接运行 src/main/java/com/google/cloudschool/CloudschoolApplication.java就可以</p>
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/run.png" alt="50" style="zoom:30%;">
+
+<p>在浏览器输入localhost:8080就可以访问了.</p>
+<p>简单的demo见 <span class="exturl"><a class="exturl__link" href="https://spring.io/quickstart" target="_blank" rel="noopener">https://spring.io/quickstart</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h3 id="步入正题：访问登录界面">
+          <a href="#步入正题：访问登录界面" class="heading-link"><i class="fas fa-link"></i></a>步入正题：访问登录界面</h3>
+      
+        <h4 id="方法一：ip-端口-静态资源">
+          <a href="#方法一：ip-端口-静态资源" class="heading-link"><i class="fas fa-link"></i></a>方法一：ip:端口/静态资源</h4>
+      <p>把静态资源放到resources/static下,这是springboot静态资源默认访问路径。</p>
+<p>在浏览器直接ip:端口/静态资源 就可以了，如：</p>
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/method1login.png" alt="50" style="zoom:40%;">
+
+
+        <h4 id="方法二：用localhost-8080-login">
+          <a href="#方法二：用localhost-8080-login" class="heading-link"><i class="fas fa-link"></i></a>方法二：用localhost:8080/login</h4>
+      
+        <h4 id="编写login-html">
+          <a href="#编写login-html" class="heading-link"><i class="fas fa-link"></i></a>编写login.html</h4>
+      <p>放在resource/templates目录下。</p>
+
+        <h4 id="新建LoginController">
+          <a href="#新建LoginController" class="heading-link"><i class="fas fa-link"></i></a>新建LoginController</h4>
+      <p>首先新建一个controller文件夹，在controller目录下新建LoginController.java。</p>
+<p>代码：</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.google.cloudschool.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">welcomeLogin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="在pom-xml文件中加入依赖">
+          <a href="#在pom-xml文件中加入依赖" class="heading-link"><i class="fas fa-link"></i></a>在pom.xml文件中加入依赖</h4>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="访问localhost-8080-login">
+          <a href="#访问localhost-8080-login" class="heading-link"><i class="fas fa-link"></i></a>访问localhost:8080/login</h4>
+      <img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/login.png" alt="50" style="zoom:30%;">
+
+
+        <h3 id="进行登录操作：后端方面">
+          <a href="#进行登录操作：后端方面" class="heading-link"><i class="fas fa-link"></i></a>进行登录操作：后端方面</h3>
+      <p>因为要用到MyBatis，所以我们首先配置MyBatis</p>
+
+        <h4 id="配置MyBatis依赖">
+          <a href="#配置MyBatis依赖" class="heading-link"><i class="fas fa-link"></i></a>配置MyBatis依赖</h4>
+      <p>修改pom.xml文件，加入：</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="resource-目录下新建application-yml文件">
+          <a href="#resource-目录下新建application-yml文件" class="heading-link"><i class="fas fa-link"></i></a>resource 目录下新建application.yml文件</h4>
+      <p>进行数据源设置，写入：</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://139.196.9.111:3306/springboot?useUnicode=true&amp;characterEncoding=utf8</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">12345678</span></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">com.example.demo.dao</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath:mapper/*Mapper.xml</span></span><br></pre></td></tr></table></div></figure>
+
+<p>MyBatis 配置完成。</p>
+
+        <h4 id="新建controller，service，dao，domain文件夹">
+          <a href="#新建controller，service，dao，domain文件夹" class="heading-link"><i class="fas fa-link"></i></a>新建controller，service，dao，domain文件夹</h4>
+      <p>如图：</p>
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/dic.png" alt="50" style="zoom:30%;">
+
+
+        <h4 id="编写login-html，Jquery-Ajax发送post请求">
+          <a href="#编写login-html，Jquery-Ajax发送post请求" class="heading-link"><i class="fas fa-link"></i></a>编写login.html，Jquery Ajax发送post请求</h4>
+      <img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/ajaxcode.png" alt="50" style="zoom:30%;">
+
+
+        <h4 id="编写controller，service-serviceImpl，mapper">
+          <a href="#编写controller，service-serviceImpl，mapper" class="heading-link"><i class="fas fa-link"></i></a>编写controller，service, serviceImpl，mapper</h4>
+      
+        <h5 id="文件结构">
+          <a href="#文件结构" class="heading-link"><i class="fas fa-link"></i></a>文件结构</h5>
+      <img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/filecons.png" alt="50" style="zoom:30%;">
+
+
+        <h5 id="LoginController-java处理post请求方法">
+          <a href="#LoginController-java处理post请求方法" class="heading-link"><i class="fas fa-link"></i></a>LoginController.java处理post请求方法</h5>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function">String <span class="title">ajaxLogin</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"username="</span>+username+<span class="string">" password="</span>+password);</span><br><span class="line">    <span class="keyword">int</span> code = userService.login(username,password);</span><br><span class="line">    System.out.println(<span class="string">"code = "</span>+code);</span><br><span class="line">    JSONObject result = <span class="keyword">new</span> JSONObject() ;</span><br><span class="line">    result.put(<span class="string">"code"</span>,code);</span><br><span class="line">    <span class="keyword">if</span> (code &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">        result.put(<span class="string">"msg"</span>,<span class="string">"登录成功！"</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        result.put(<span class="string">"msg"</span>,<span class="string">"用户或密码错误！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result.toJSONString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h5 id="UserService-java">
+          <a href="#UserService-java" class="heading-link"><i class="fas fa-link"></i></a>UserService.java</h5>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.google.cloudschool.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">login</span><span class="params">(String username, String password)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h5 id="UserServiceImpl-java">
+          <a href="#UserServiceImpl-java" class="heading-link"><i class="fas fa-link"></i></a>UserServiceImpl.java</h5>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.google.cloudschool.service.Impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.cloudschool.dao.UserMapper;</span><br><span class="line"><span class="keyword">import</span> com.google.cloudschool.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userMapper.login(username,password);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h5 id="UserMapper-java">
+          <a href="#UserMapper-java" class="heading-link"><i class="fas fa-link"></i></a>UserMapper.java</h5>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.google.cloudschool.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Select</span>(<span class="string">"select count(*) from user where username = #&#123;param1&#125; and password = #&#123;param2&#125; "</span>)</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">login</span><span class="params">(String username, String password)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="login-html-发送post登录请求就可以去数据库查询到是否有该用户啦">
+          <a href="#login-html-发送post登录请求就可以去数据库查询到是否有该用户啦" class="heading-link"><i class="fas fa-link"></i></a>login.html 发送post登录请求就可以去数据库查询到是否有该用户啦</h4>
+      
+        <h4 id="登录成功就跳转新界面啦！">
+          <a href="#登录成功就跳转新界面啦！" class="heading-link"><i class="fas fa-link"></i></a>登录成功就跳转新界面啦！</h4>
+      
+        <h3 id="测试接口调用">
+          <a href="#测试接口调用" class="heading-link"><i class="fas fa-link"></i></a>测试接口调用</h3>
+      <p>用chrome浏览器的Talend API Tester扩展程序模拟发送请求（只调用接口的话可以注释掉thymeleaf的）</p>
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/talend1.png" alt="50" style="zoom:30%;">
+
+<img src="/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/talend2.png" alt="50" style="zoom:30%;"></div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://jiayanfighting.github.io">Jiayan Huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/">https://jiayanfighting.github.io/2020/05/31/SpringBoot%E6%90%AD%E5%BB%BAweb%E9%A1%B9%E7%9B%AE/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://jiayanfighting.github.io/tags/Java/">Java</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://jiayanfighting.github.io/tags/web/">web</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://jiayanfighting.github.io/tags/SpringBoot/">SpringBoot</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2020/05/25/%E7%B4%A2%E5%BC%95/"><span class="paginator-prev__text">索引</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#在-https-start-spring-io-上生成初始化文件"><span class="toc-number">1.</span> <span class="toc-text">
+          在 https:&#x2F;&#x2F;start.spring.io&#x2F; 上生成初始化文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在IDEA中打开这个项目"><span class="toc-number">2.</span> <span class="toc-text">
+          在IDEA中打开这个项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行"><span class="toc-number">3.</span> <span class="toc-text">
+          运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步入正题：访问登录界面"><span class="toc-number">4.</span> <span class="toc-text">
+          步入正题：访问登录界面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一：ip-端口-静态资源"><span class="toc-number">4.1.</span> <span class="toc-text">
+          方法一：ip:端口&#x2F;静态资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二：用localhost-8080-login"><span class="toc-number">4.2.</span> <span class="toc-text">
+          方法二：用localhost:8080&#x2F;login</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写login-html"><span class="toc-number">4.3.</span> <span class="toc-text">
+          编写login.html</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新建LoginController"><span class="toc-number">4.4.</span> <span class="toc-text">
+          新建LoginController</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在pom-xml文件中加入依赖"><span class="toc-number">4.5.</span> <span class="toc-text">
+          在pom.xml文件中加入依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#访问localhost-8080-login"><span class="toc-number">4.6.</span> <span class="toc-text">
+          访问localhost:8080&#x2F;login</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进行登录操作：后端方面"><span class="toc-number">5.</span> <span class="toc-text">
+          进行登录操作：后端方面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置MyBatis依赖"><span class="toc-number">5.1.</span> <span class="toc-text">
+          配置MyBatis依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#resource-目录下新建application-yml文件"><span class="toc-number">5.2.</span> <span class="toc-text">
+          resource 目录下新建application.yml文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新建controller，service，dao，domain文件夹"><span class="toc-number">5.3.</span> <span class="toc-text">
+          新建controller，service，dao，domain文件夹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写login-html，Jquery-Ajax发送post请求"><span class="toc-number">5.4.</span> <span class="toc-text">
+          编写login.html，Jquery Ajax发送post请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写controller，service-serviceImpl，mapper"><span class="toc-number">5.5.</span> <span class="toc-text">
+          编写controller，service, serviceImpl，mapper</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#文件结构"><span class="toc-number">5.5.1.</span> <span class="toc-text">
+          文件结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LoginController-java处理post请求方法"><span class="toc-number">5.5.2.</span> <span class="toc-text">
+          LoginController.java处理post请求方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UserService-java"><span class="toc-number">5.5.3.</span> <span class="toc-text">
+          UserService.java</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UserServiceImpl-java"><span class="toc-number">5.5.4.</span> <span class="toc-text">
+          UserServiceImpl.java</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UserMapper-java"><span class="toc-number">5.5.5.</span> <span class="toc-text">
+          UserMapper.java</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#login-html-发送post登录请求就可以去数据库查询到是否有该用户啦"><span class="toc-number">5.6.</span> <span class="toc-text">
+          login.html 发送post登录请求就可以去数据库查询到是否有该用户啦</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#登录成功就跳转新界面啦！"><span class="toc-number">5.7.</span> <span class="toc-text">
+          登录成功就跳转新界面啦！</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试接口调用"><span class="toc-number">6.</span> <span class="toc-text">
+          测试接口调用</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/head.png" alt="avatar"></div><p class="sidebar-ov-author__text">世上无难事，只要肯攀登</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/JiayanFighting/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://weibo.com/678439225/" target="_blank" rel="noopener" data-popover="微博" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weibo"></i></span></a><a class="sidebar-ov-social-item" href="18804636284" target="_blank" rel="noopener" data-popover="social.phone" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="2817465223" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">9</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">0</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">7</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2020</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Jiayan Huang</span></div><div>感谢您浏览我的博客！</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.0.0"></script><script src="/js/stun-boot.js?v=2.0.0"></script><script src="/js/scroll.js?v=2.0.0"></script><script src="/js/header.js?v=2.0.0"></script><script src="/js/sidebar.js?v=2.0.0"></script></body></html>
