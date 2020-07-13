@@ -5,11 +5,13 @@
 <meta property="og:site_name" content="Jiayan&#39;s Blog">
 <meta property="og:description" content="Java JVM                           1. 运行时数据区       Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。                     主要知识点：        运行时数据区的组成（JDK 1.6，JDK 1.7，JDK 1.8的区别）  每个区域的详解">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiayanfighting.github.io/2019/06/06/Java-JVM/1_1.jpg">
 <meta property="article:published_time" content="2019-06-06T12:56:32.000Z">
 <meta property="article:modified_time" content="2020-03-04T13:01:36.000Z">
 <meta property="article:author" content="Jiayan Huang">
 <meta property="article:tag" content="Java">
-<meta name="twitter:card" content="summary"><meta name="keywords" content="Jiayan Huang, Jiayan's Blog"><meta name="description" content="欢迎来到家晏的博客"><title>Java JVM | Jiayan's Blog</title><link ref="canonical" href="https://jiayanfighting.github.io/2019/06/06/Java-JVM/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.0.0"><script>var Stun = window.Stun || {};
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiayanfighting.github.io/2019/06/06/Java-JVM/1_1.jpg"><meta name="keywords" content="Jiayan Huang, Jiayan's Blog"><meta name="description" content="欢迎来到家晏的博客"><title>Java JVM | Jiayan's Blog</title><link ref="canonical" href="https://jiayanfighting.github.io/2019/06/06/Java-JVM/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.0.0"><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -40,8 +42,8 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></he
           <a href="#1-运行时数据区" class="heading-link"><i class="fas fa-link"></i></a>1. 运行时数据区</h2>
       <p>Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。</p>
 
-        <h4 id="主要知识点：">
-          <a href="#主要知识点：" class="heading-link"><i class="fas fa-link"></i></a>主要知识点：</h4>
+        <h3 id="主要知识点：">
+          <a href="#主要知识点：" class="heading-link"><i class="fas fa-link"></i></a>主要知识点：</h3>
       <ul>
 <li><p>运行时数据区的<strong>组成</strong>（JDK 1.6，JDK 1.7，JDK 1.8的区别）</p>
 </li>
@@ -51,76 +53,89 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></he
 </li>
 </ul>
 
-        <h5 id="JVM内存区域组成：">
-          <a href="#JVM内存区域组成：" class="heading-link"><i class="fas fa-link"></i></a>JVM内存区域组成：</h5>
-      <ul>
-<li><p>$\leq$1.6 ： 程序计数器，虚拟机栈，本地方法栈，堆，方法区（其中包含运行时常量池，字符串常量池）</p>
-</li>
-<li><p>1.7 ： 程序计数器，虚拟机栈，本地方法栈，堆（其中包含运行时常量池，字符串常量池），方法区</p>
-</li>
-<li><p>$\geq$1.8 ： 程序计数器，虚拟机栈，本地方法栈，堆（其中包含运行时常量池，字符串常量池），元空间</p>
-</li>
-</ul>
+        <h3 id="Java-虚拟机运行时数据区组成">
+          <a href="#Java-虚拟机运行时数据区组成" class="heading-link"><i class="fas fa-link"></i></a>Java 虚拟机运行时数据区组成</h3>
+      <img src="/2019/06/06/Java-JVM/1_1.jpg" style="zoom:20%">
 
-        <h5 id="变化：">
-          <a href="#变化：" class="heading-link"><i class="fas fa-link"></i></a>变化：</h5>
-      <p>1.6 vs 1.7：运行时常量池，字符串常量池从方法区移到堆，并且，加载的类信息…等被转移到 堆 里面的运行时常量池中了</p>
-<p>1.7 vs 1.8 ：方法区从运行时数据区移到直接内存，元空间替代永久代</p>
 
-        <h5 id="JDK-1-6">
-          <a href="#JDK-1-6" class="heading-link"><i class="fas fa-link"></i></a>JDK 1.6</h5>
+        <h4 id="具体介绍：">
+          <a href="#具体介绍：" class="heading-link"><i class="fas fa-link"></i></a>具体介绍：</h4>
       
-        <h5 id="具体介绍：">
-          <a href="#具体介绍：" class="heading-link"><i class="fas fa-link"></i></a>具体介绍：</h5>
+        <h4 id="1-虚拟机栈（JVM-Stacks）">
+          <a href="#1-虚拟机栈（JVM-Stacks）" class="heading-link"><i class="fas fa-link"></i></a>1. 虚拟机栈（JVM Stacks）</h4>
       <ul>
-<li><p><strong>虚拟机栈 (JVM Stacks)</strong></p>
-<blockquote>
-<p>线程私有</p>
-<p>存放：是由一个个栈帧组成，而每个栈帧中都拥有：<strong>局部变量表</strong>（八种基本数据类型变量，部分的返回结果，非基本类型对象指向堆上的地址）<strong>、操作数栈、动态链接、方法出口信息</strong>。</p>
-<p>不需要进行 GC。</p>
-</blockquote>
-</li>
-<li><p><strong>本地方法栈(Native Method Stacks)</strong></p>
-<blockquote>
-<p>线程私有</p>
-<p>存放：<strong>每个native方法调用的状态</strong></p>
-<p>为虚拟机执行本地方法时服务的</p>
-<p>不需要进行 GC</p>
-</blockquote>
-</li>
-<li><p><strong>程序计数器</strong></p>
-<blockquote>
-<p>线程私有</p>
-<p>存放：每个线程<strong>下一步将执行的JVM指令</strong>, 如该方法为native的，则PC寄存器中不存储任何信息。</p>
-<p>字节码解释器工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等功能都需要依赖这个计数器来完成。</p>
-<p>记录当前线程的位置便于线程切换与恢复；</p>
-<p><strong>程序计数器是唯一一个不会出现     OutOfMemoryError （OOM）的内存区域</strong>，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</p>
-</blockquote>
-</li>
-<li><p><strong>堆 (Heap)</strong></p>
-<blockquote>
-<p>线程共享</p>
-<p>存放：<strong>对象实例和数组</strong></p>
-<p>Java 堆是垃圾收集器管理的主要区域，因此也被称作GC     堆。从垃圾回收的角度， Java 堆还可以细分为：新生代和老年代。</p>
-</blockquote>
-</li>
-<li><p><strong>1.7 的方法区 (Method Area)</strong></p>
-<blockquote>
-<ul>
-<li>线程共享</li>
-<li><strong>存放：</strong>被虚拟机加载的类信息(名称、修饰符等)、类中的静态变量、 类中定义为final类型的常量、类中的Field信息、类中的方法信息</li>
-<li>方法区只是一个概念，永久代或者元空间是它的实现</li>
+<li>线程私有</li>
+<li>每个方法被执行的时候，Java虚拟机都会同步创建一个<strong>栈帧</strong>（Stack Frame）用于存储<strong>局部变量表、操作数栈、动态连接、方法出口</strong>等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</li>
+<li>异常情况：<ul>
+<li>如果线程请求的栈深度大于虚拟机所允许的深度，将抛出<strong>StackOverflowError</strong>异常；</li>
+<li>如果Java虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出<strong>OutOfMemoryError</strong>异常。</li>
 </ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>局部变量表</strong>：基本数据类型（boolean、byte、char、short、int、 float、long、double）、对象引用（reference类型，它并不等同于对象本身，可能是一个指向对象起始 地址的引用指针，也可能是指向一个代表对象的句柄或者其他与此对象相关的位置）和returnAddress 类型（指向了一条字节码指令的地址））。当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量空间是完全确定 的，在方法运行期间不会改变局部变量表的大小。</p>
+</blockquote>
+
+        <h4 id="2-本地方法栈（Native-Method-Stacks）">
+          <a href="#2-本地方法栈（Native-Method-Stacks）" class="heading-link"><i class="fas fa-link"></i></a>2. 本地方法栈（Native Method Stacks）</h4>
+      <ul>
+<li>线程私有</li>
+<li><strong>本地方法栈则是为虚拟机使用到的本地（Native） 方法服务。</strong>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务</li>
+<li>异常情况：与虚拟机栈一样，本地方法栈也会在栈深度溢出或者栈扩展失败时分别抛出StackOverflowError和OutOfMemoryError异常</li>
+</ul>
+
+        <h4 id="3-程序计数器（Program-Counter-Register）">
+          <a href="#3-程序计数器（Program-Counter-Register）" class="heading-link"><i class="fas fa-link"></i></a>3. 程序计数器（Program Counter Register）</h4>
+      <ul>
+<li>线程私有</li>
+<li>存放：每个线程<strong>下一步将执行的JVM指令</strong>, 如果线程正在执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果正在执行的是本地（Native）方法，这个计数器值则应为空（Undefined）。</li>
+<li>字节码解释器工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等功能都需要依赖这个计数器来完成。</li>
+<li>记录当前线程的位置便于线程切换与恢复；</li>
+<li>异常情况：<strong>程序计数器是唯一一个不会出现OutOfMemoryError （OOM）的内存区域</strong>，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</li>
+</ul>
+
+        <h4 id="4-堆（Heap）">
+          <a href="#4-堆（Heap）" class="heading-link"><i class="fas fa-link"></i></a>4. 堆（Heap）</h4>
+      <ul>
+<li>线程共享</li>
+<li>虚拟机启动时创建</li>
+<li>存放：<strong>对象实例和数组</strong></li>
+<li>Java堆可以处于物理上不连续的内存空间中，但在逻辑上它应该被视为连续的。Java虚拟机是可扩展的（通过参数-Xmx和-Xms设定）。</li>
+<li>异常情况：如果在Java堆中没有内存完成实例分配，并且堆也无法再扩展时，Java虚拟机将会抛出OutOfMemoryError异常。</li>
+</ul>
+
+        <h4 id="5-方法区（Method-Area）">
+          <a href="#5-方法区（Method-Area）" class="heading-link"><i class="fas fa-link"></i></a>5. 方法区（Method Area）</h4>
+      <ul>
+<li><p>线程共享</p>
+</li>
+<li><p><strong>存放：</strong>存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
+</li>
+<li><p>方法区只是一个概念，永久代或者元空间是它的实现</p>
+<blockquote>
+<p>HotSpot虚拟机设计团队把收集器的分代设计扩展至方法区(使用永久代来实现方法区)，但是对于其他虚拟机实现，譬如BEA JRockit、IBM J9等来说，是不存在永久代的概念的。</p>
+<p>在JDK6的时候HotSpot逐步改为采用本地内存（Native Memory）来实现方法区，到JDK7的HotSpot，已经把原本放在永久代的字符串常量池、静态变量等移出，而到了 JDK 8，完全废弃了永久代的概念，改用与JRockit、J9一样在本地内存中实现的元空间（Metaspace）来代替，把JDK 7中永久代还剩余的内容（主要是类型信息）全部移到元空间中。</p>
 </blockquote>
 </li>
-<li><p><strong>运行时常量池(Runtime Constant Pool)</strong></p>
-<blockquote>
-<p>存放：类中的固定的常量信息、方法和Field的引用信息等。编译期间生成的字面量、符号引用</p>
-</blockquote>
+</ul>
+
+        <h4 id="6-运行时常量池（Runtime-Constant-Pool）">
+          <a href="#6-运行时常量池（Runtime-Constant-Pool）" class="heading-link"><i class="fas fa-link"></i></a>6. 运行时常量池（Runtime Constant Pool）</h4>
+      <ul>
+<li>是方法区的一部分</li>
+<li>存放：Class文件中除了有类的版本、字 段、方法、接口等描述信息外，还有一项信息是常量池表（Constant Pool Table），用于存放编译期生成的各种字面量与符号引用，这部分内容将在类加载后存放到方法区的运行时常量池中。运行期间也可以将新的常量放入池中。</li>
+<li>异常情况：既然运行时常量池是方法区的一部分，自然受到方法区内存的限制，当常量池无法再申请到内存时会抛出OutOfMemoryError异常。</li>
+</ul>
+
+        <h4 id="7-直接内存">
+          <a href="#7-直接内存" class="heading-link"><i class="fas fa-link"></i></a>7. 直接内存</h4>
+      <ul>
+<li><p>不属于虚拟机运行时数据区</p>
 </li>
-<li><p><strong>元空间</strong> <strong>(MetaSpace)</strong></p>
+<li><p>异常情况：动态扩展时会出现 OutOfMemoryError异常</p>
+</li>
+<li><p><strong>元空间(MetaSpace)</strong></p>
 <blockquote>
-<p>在直接内存中</p>
 <p>存放：类的<strong>元数据</strong>。如方法、字段、类、包的描述信息，这些信息可以用于创建文档、跟踪代码中的依赖性、执行编译时检查</p>
 <p>方法区里面的那些东西，大部分都被移到堆里面去了，还剩下一些元数据被保存在元空间里面</p>
 <p>元空间有单独的元空间虚拟机执行内存分配与垃圾回收</p>
@@ -133,11 +148,21 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></he
 <li><strong>提升GC性能：</strong>永久代的 GC 特别难搞，严重影响 Full GC 的性能。于是抛弃永久代，使用元空间，从而让     Full GC 不再关心方法区</li>
 <li><strong>增加可操作空间：</strong>元空间里面存放的是类的元数据，这样加载多少类的元数据就不由 MaxPermSize 控制了, 而由系统的实际可用空间来控制，这样能加载的类就更多了。</li>
 </ol>
+
+        <h4 id="参考文献：">
+          <a href="#参考文献：" class="heading-link"><i class="fas fa-link"></i></a>参考文献：</h4>
+      <p>周志明. 深入理解Java虚拟机:JVM高级特性与最佳实践. 机械工业出版社, 2019.</p>
 </div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://jiayanfighting.github.io">Jiayan Huang</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://jiayanfighting.github.io/2019/06/06/Java-JVM/">https://jiayanfighting.github.io/2019/06/06/Java-JVM/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://jiayanfighting.github.io/tags/Java/">Java</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2019/07/14/Java-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Java 垃圾回收机制</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2019/01/06/hello-world/"><span class="paginator-prev__text">Hello</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-JVM"><span class="toc-number">1.</span> <span class="toc-text">
           Java JVM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-运行时数据区"><span class="toc-number">1.1.</span> <span class="toc-text">
-          1. 运行时数据区</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主要知识点："><span class="toc-number">1.1.0.1.</span> <span class="toc-text">
-          主要知识点：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JVM内存区域组成："><span class="toc-number">1.1.0.1.1.</span> <span class="toc-text">
-          JVM内存区域组成：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变化："><span class="toc-number">1.1.0.1.2.</span> <span class="toc-text">
-          变化：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JDK-1-6"><span class="toc-number">1.1.0.1.3.</span> <span class="toc-text">
-          JDK 1.6</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#具体介绍："><span class="toc-number">1.1.0.1.4.</span> <span class="toc-text">
-          具体介绍：</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/head.png" alt="avatar"></div><p class="sidebar-ov-author__text">世上无难事，只要肯攀登</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/JiayanFighting/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://weibo.com/678439225/" target="_blank" rel="noopener" data-popover="微博" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weibo"></i></span></a><a class="sidebar-ov-social-item" href="18804636284" target="_blank" rel="noopener" data-popover="social.phone" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="2817465223" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">15</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">0</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2020</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Jiayan Huang</span></div><div>感谢您浏览我的博客！</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.0.0"></script><script src="/js/stun-boot.js?v=2.0.0"></script><script src="/js/scroll.js?v=2.0.0"></script><script src="/js/header.js?v=2.0.0"></script><script src="/js/sidebar.js?v=2.0.0"></script></body></html>
+          1. 运行时数据区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要知识点："><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          主要知识点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-虚拟机运行时数据区组成"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          Java 虚拟机运行时数据区组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#具体介绍："><span class="toc-number">1.1.2.1.</span> <span class="toc-text">
+          具体介绍：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-虚拟机栈（JVM-Stacks）"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">
+          1. 虚拟机栈（JVM Stacks）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-本地方法栈（Native-Method-Stacks）"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">
+          2. 本地方法栈（Native Method Stacks）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-程序计数器（Program-Counter-Register）"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">
+          3. 程序计数器（Program Counter Register）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-堆（Heap）"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">
+          4. 堆（Heap）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-方法区（Method-Area）"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">
+          5. 方法区（Method Area）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-运行时常量池（Runtime-Constant-Pool）"><span class="toc-number">1.1.2.7.</span> <span class="toc-text">
+          6. 运行时常量池（Runtime Constant Pool）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-直接内存"><span class="toc-number">1.1.2.8.</span> <span class="toc-text">
+          7. 直接内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考文献："><span class="toc-number">1.1.2.9.</span> <span class="toc-text">
+          参考文献：</span></a></li></ol></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/head.png" alt="avatar"></div><p class="sidebar-ov-author__text">世上无难事，只要肯攀登</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/JiayanFighting/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://weibo.com/678439225/" target="_blank" rel="noopener" data-popover="微博" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weibo"></i></span></a><a class="sidebar-ov-social-item" href="18804636284" target="_blank" rel="noopener" data-popover="social.phone" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="2817465223" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">15</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">0</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2020</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Jiayan Huang</span></div><div>感谢您浏览我的博客！</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.0.0"></script><script src="/js/stun-boot.js?v=2.0.0"></script><script src="/js/scroll.js?v=2.0.0"></script><script src="/js/header.js?v=2.0.0"></script><script src="/js/sidebar.js?v=2.0.0"></script></body></html>
